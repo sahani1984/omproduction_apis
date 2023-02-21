@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public/www')))
 app.use(bodyParser.urlencoded({ extended: true }));
-var conn = require("./server");
+
 
 
 app.set('view engine', 'pug');
@@ -34,7 +34,6 @@ function handleDisconnect() {
         }
     });
 }
-
 handleDisconnect();
 
 // connection.connect((err) => {
