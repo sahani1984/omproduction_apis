@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const db = require('./app/config/db.config');
-const apis =  require('./app/routes/apis');
+// const apis =  require('./app/routes/apis');
 const app = express();
 
 /*APP CONFIGURATION*/
@@ -32,13 +32,20 @@ function handleDisconnect() {
         }
     });
 }
-handleDisconnect();
+/*handleDisconnect(); */
 
 
 /*REDIRECT ON GIVEN FILE IF ROUTES NOT FOUND*/
 app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname + '/public/www/index.html'))
 })
+
+app.get('/apis', (req, res)=>{
+    res.send("Welocome, Durgesh!!");
+})
+
+
+
 
 
 
