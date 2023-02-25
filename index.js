@@ -1,13 +1,15 @@
-const connection = require('./server');
+const connection = require('./app/config/db.config');
 const bodyParser = require('body-parser');
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const app = express();
+const cors = require('cors')
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public/www')))
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 
 
@@ -24,6 +26,7 @@ function handleDisconnect() {
             console.log('error when connecting to db:', err);
             setTimeout(handleDisconnect, 2000);
         }
+        console.log('database connected.')
     });
     connection.on('error', function (err) {
         console.log('db error', err);
@@ -158,20 +161,43 @@ var upload = multer({
     storage: storage
 });
 
+// app.post("/api/file-uplaod", upload.single('image'), (req, res) => {
+//     if (!req.file) {
+//         console.log("No file upload");
+//     } else {
+//         console.log(req.file.filename);
+//         var id = new Date().getTime().toString();
+//         var imgsrc = 'http://127.0.0.1:3000/images/' + req.file.filename
+//         var insertData = "INSERT INTO users_file(id, file_src)VALUES(?,?)"
+//         connection.query(insertData, [id, imgsrc], (err, result) => {
+//             if (err) throw err
+//             console.log("file uploaded");
+//             let obj = {};
+//             obj["type"] = "success",
+//             obj["msg"] = "file uploaded successfully"
+//             obj["url"] = imgsrc;
+//             res.send(obj);
+//         })
+//     }
+// });
+
+
 app.post("/api/file-uplaod", upload.single('image'), (req, res) => {
+    console.log(JSON.stringify(req.file));   
     if (!req.file) {
         console.log("No file upload");
     } else {
         console.log(req.file.filename);
         var id = new Date().getTime().toString();
         var imgsrc = 'http://127.0.0.1:3000/images/' + req.file.filename
-        var insertData = "INSERT INTO users_file(id, file_src)VALUES(?,?)"
-        connection.query(insertData, [id, imgsrc], (err, result) => {
+        var insertData = "INSERT INTO tbl_photo_gallery(id, url, title, description)VALUES(?,?,?,?)"
+        connection.query(insertData, [id, imgsrc, '', ''], (err, result) => {
             if (err) throw err
             console.log("file uploaded");
             let obj = {};
             obj["type"] = "success",
-                obj["msg"] = "file uploaded successfully"
+            obj["msg"] = "file uploaded successfully"
+            obj["url"] = imgsrc;
             res.send(obj);
         })
     }

@@ -7,4 +7,12 @@ const connection  =  mysql.createConnection({
     database:"omproduction_db",
 })
 
+// const connection  =  mysql.createConnection({
+//     host:"localhost",
+//     user:"root",
+//     password:"Durgesh$41084",
+//     database:"durgeshdb",
+// })
+
+
 module.exports = connection;
