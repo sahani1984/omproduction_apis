@@ -43,6 +43,13 @@ app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname + '/public/www/index.html'))
 })
 
+app.get('/apis', (req, res)=>{
+    res.send("Welocome, Durgesh!!");
+})
+
+
+
+
 
 
 /*APP LISTEN ON PORT*/
