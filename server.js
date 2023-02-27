@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const db = require('./app/config/db.config');
-const apis =  require('./app/routes/apis');
-const gallery =  require('./app/routes/photo_gallery');
+const apis =  require('./app/controllers/apis');
+const gallery =  require('./app/controllers/photo_gallery');
 const app = express();
 
 /*APP CONFIGURATION*/
@@ -14,6 +14,7 @@ app.use(cors());
 app.use('/api', apis);
 app.use('/api/gallery', gallery);
 app.use(express.static(path.join(__dirname, '/public/www')));
+app.use('/images/gallery', express.static(__dirname + '/public/images/gallery'));
 
 
 /*MYSQL DATABASE CONNETION*/
